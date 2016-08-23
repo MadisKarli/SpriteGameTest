@@ -36,8 +36,12 @@ class GameViewController: UIViewController {
         let skView: SKView = self.view as! SKView
         skView.showsFPS = true
         skView.showsNodeCount = true
+        skView.showsPhysics = true
+        skView.multipleTouchEnabled = false        
         
         let scene:SKScene = GameScene(size: skView.bounds.size)
+        //TODO: muuda suurust
+        //let scene:SKScene = GameScene(size: cgSize())
         scene.scaleMode = SKSceneScaleMode.AspectFill
         skView.presentScene(scene)
     }

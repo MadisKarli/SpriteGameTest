@@ -7,30 +7,81 @@
 //
 
 import SpriteKit
+let bulletCategory:UInt32 = 0x1 << 1
+let bodyCategory:UInt32 = 0x1 << 0
 
-class Bodypart{
-    var name: String
-    var picture: SKSpriteNode
-    var causes: [SKSpriteNode]
+class Bodypart: SKSpriteNode{
+    var targets = [String]()
+    var childern = [SKSpriteNode]()
     
-    init(name: String, picture: SKSpriteNode, causes: [SKSpriteNode]){
-        self.name = name
-        self.picture = picture
-        self.causes = causes
+    init?(filename: String){
+        let texture = SKTexture(imageNamed: filename)
+        super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
+        
+        if(filename.hasPrefix("obj_")){
+            let nameWithoutPrefix: String = filename.componentsSeparatedByString("obj_")[1]
+            self.name = nameWithoutPrefix.componentsSeparatedByString(">")[0]
+            
+        }else{
+            self.name = filename
+        }
+        
+        self.physicsBody = SKPhysicsBody(texture: texture, size: (texture.size()))
+        self.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height / 2)
+        self.physicsBody = SKPhysicsBody(texture: texture, size: (texture.size()))
+        self.physicsBody?.dynamic = true
+        self.physicsBody?.categoryBitMask = bodyCategory
+        self.physicsBody?.contactTestBitMask = bulletCategory
+        self.physicsBody?.collisionBitMask = 0
         
     }
     
-    func addCause(cause: SKSpriteNode){
-        self.causes.append(cause)
-    }
-    
-    func addCause(causes: [SKSpriteNode]){
-        for node in causes{
-            self.causes.append(node)
+    init?(filename: String, targets: [String]){
+        let texture = SKTexture(imageNamed: filename)
+        super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
+        
+        if(filename.hasPrefix("obj_")){
+            let nameWithoutPrefix: String = filename.componentsSeparatedByString("obj_")[1]
+            self.name = nameWithoutPrefix.componentsSeparatedByString(">")[0]
+            
+        }else{
+            self.name = filename
         }
+        
+        self.targets = targets
+        self.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height / 2)
+        self.physicsBody = SKPhysicsBody(texture: texture, size: (texture.size()))
+        self.physicsBody?.dynamic = true
+        self.physicsBody?.categoryBitMask = bodyCategory
+        self.physicsBody?.contactTestBitMask = bulletCategory
+        self.physicsBody?.collisionBitMask = 0
+        
     }
     
-    func setCauses(causes: [SKSpriteNode]){
-        self.causes = causes
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        for touch in touches{
+            let location = touch.locationInNode(self)
+            
+            
+            print("hei", location.x, location.y)
+        }
+        
+    }
+
+    
+    func getTargets() -> [String]{
+        return targets
+    }
+    func addChildz(child: SKSpriteNode){
+        childern.append(child)
+    }
+    
+    func getChildz() -> [SKSpriteNode]{
+        return childern
     }
 }

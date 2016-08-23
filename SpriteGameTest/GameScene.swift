@@ -5,6 +5,16 @@
 //  Created by Madis-Karli Koppel on 10/08/16.
 //  Copyright (c) 2016 Papple Inc. All rights reserved.
 //
+/*
+ bugid:
+ pea keskel ei näita collisionit
+ collision üldse üsna broken
+ 
+ kiiresti liigutades ei tööta - button to kill children and reset?
+ 
+ optimiseerimine:
+ kui laps juba on elus ja järgmisel on ka laps, siis võiks ainult üks sprite olla näiteks sama mis incontact array on
+ */
 
 import SpriteKit
 
@@ -18,16 +28,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     var juku:SKSpriteNode = SKSpriteNode()
     var bodyPart:SKSpriteNode = SKSpriteNode()
+
     
     var bullet:SKSpriteNode = SKSpriteNode()
     var litter:SKSpriteNode = SKSpriteNode()
-    var deleteOnTouch = [SKSpriteNode]()
-    var targetPosition = CGPoint()
-    
+    var litterSelected:Bool = false
+
+    var targetPosition:CGPoint = CGPoint()
     var touchedPartLabel = SKLabelNode()
     var touchedParts = Set<String>()
+    var deleteOnTouch = [SKSpriteNode]()
+    
+    var incontact = [(String,Int)]()
+    
     
     override func didMoveToView(view: SKView) {
+        
+        //disable multitouch
         touchedPartLabel.text = "Touched bodypart: "
         touchedPartLabel.fontSize = 12
         touchedPartLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height - 20)
@@ -37,7 +54,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override init(size:CGSize){
         super.init(size:size)
-        //self.backgroundColor = SKColor.yellowColor()
         
         self.physicsWorld.gravity = CGVector(dx: 0,dy: 0)
         self.physicsWorld.contactDelegate = self
@@ -48,55 +64,68 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         juku.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2)
         juku.physicsBody = SKPhysicsBody(texture: juku.texture!, size: (juku.texture!.size()))
         
-        juku.physicsBody?.dynamic = true
         juku.physicsBody?.categoryBitMask = bodyCategory
         juku.physicsBody?.contactTestBitMask = bulletCategory
         juku.physicsBody?.collisionBitMask = 0
-        self.addChild(juku)
+        //self.addChild(juku)
         
-        
-    
 
-        createBodyPart("jukuParemKasi")
-        createBodyPart("jukuParemKasiSormed")
-        createBodyPart("jukuParemKasiKeskmineSorm")
-        createBodyPart("jukuPea")
+        //following reads resources and creates body parts
+        /*
+         naming convention for sprites without childern:    obj_name@1x.png
+         naming convention for sprites with n childern:     obj_name>child1|child2|...|childN@1x.png
+         naming convention for childern:                    name@1x.png
+        */
+        let fm = NSFileManager.defaultManager()
+        let path = NSBundle.mainBundle().resourcePath!
+        let items = try! fm.contentsOfDirectoryAtPath(path)
+        for item in items {
+            if item.hasPrefix("obj_") && item.hasSuffix("@1x.png"){
+                let name:[String] = item.componentsSeparatedByString("@")
+                print(name[0])
+                if((name[0].rangeOfString(">")) != nil){
+                    let targetsCombined:[String] = name[0].componentsSeparatedByString(">")
+                    let targets: [String] = targetsCombined[1].componentsSeparatedByString("|")
+                    for i in targets{
+                        print(i)
+                    }
+                    self.addChild(Bodypart(filename: name[0], targets: targets)!)
+                } else{
+                    self.addChild(Bodypart(filename: name[0])!)
+                }
+
+            }
+        }
         
+ 
         //loome litri, mida saab ringi lohistada
         litter = SKSpriteNode(imageNamed: "litter")
         litter.name = "litter"
-        litter.position = CGPointMake(255, 344)
-        litter.physicsBody = SKPhysicsBody(texture: litter.texture!, size: (litter.texture!.size()))
+        litter.position = CGPoint(x: 25, y: self.size.height - 25)
         
+        litter.physicsBody = SKPhysicsBody(circleOfRadius: 25)
         litter.physicsBody?.dynamic = true
         litter.physicsBody?.categoryBitMask = bulletCategory
         litter.physicsBody?.contactTestBitMask = bodyCategory
         litter.physicsBody?.collisionBitMask = 0
         //litter.physicsBody?.usesPreciseCollisionDetection = true
-        
+        incontact.append(("litter", 0))
         self.addChild(litter)
+        
     }
     
 
+    //MARK: Functions
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-
     func setTouchedLabel(){
         var new:String = "Touched body parts: "
         
         for bodyPart in touchedParts{
             new += bodyPart
-            new += "\n"
+            new += " | "
         }
         
         touchedPartLabel.text = new
-    }
-   
-    override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
     }
     
     func createBodyPart(name:String) -> SKSpriteNode{
@@ -111,38 +140,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         bodyPart.physicsBody?.categoryBitMask = bodyCategory
         bodyPart.physicsBody?.contactTestBitMask = bulletCategory
         bodyPart.physicsBody?.collisionBitMask = 0
- 
+        
         self.addChild(bodyPart)
         return bodyPart
     }
     
+    func createChild(parent: String, name:String) -> SKSpriteNode{
+        
+        bodyPart = SKSpriteNode(imageNamed: name)
+        bodyPart.name = parent + name
+        bodyPart.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2)
+        
+        self.addChild(bodyPart)
+        return bodyPart
+    }
+
+    
+    // MARK: Touch events
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         touchedParts = []
-        setTouchedLabel()
-        
+        setTouchedLabel()        
         for touch in touches {
-            //self.removeChildrenInArray(deleteOnTouch)
+ 
             let location = touch.locationInNode(self)
-            
-            print("touch", location.x, location.y)
-            //touch creates a "bullet" that is used to specify what was touched
-            /*
-             bullet = SKSpriteNode(imageNamed: "bullet")
-             bullet.name = "lehm"
-             bullet.position = CGPointMake(location.x, location.y)
-             bullet.physicsBody = SKPhysicsBody(circleOfRadius: 3)
-             
-             bullet.physicsBody?.dynamic = true
-             
-             bullet.physicsBody?.categoryBitMask = bulletCategory
-             bullet.physicsBody?.contactTestBitMask = bodyCategory
-             bullet.physicsBody?.collisionBitMask = 0
-             bullet.physicsBody?.usesPreciseCollisionDetection = true
-             
-             deleteOnTouch.append(bullet)
-             self.addChild(bullet)
-             */
+            if(litter.containsPoint(location)){
+                litterSelected = true
+            }
+            //print("touch", location.x, location.y)
+
         }
         
     }
@@ -153,54 +180,105 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
          */
         for touch in touches{
             let location = touch.locationInNode(self)
-            litter.position = location
-            /*
-             bullet = SKSpriteNode(imageNamed: "bullet")
-             bullet.name = "lehm"
-             bullet.position = CGPointMake(location.x, location.y)
-             bullet.physicsBody = SKPhysicsBody(circleOfRadius: 3)
-             
-             bullet.physicsBody?.dynamic = true
-             
-             bullet.physicsBody?.categoryBitMask = bulletCategory
-             bullet.physicsBody?.contactTestBitMask = bodyCategory
-             bullet.physicsBody?.collisionBitMask = 0
-             bullet.physicsBody?.usesPreciseCollisionDetection = true
-             
-             deleteOnTouch.append(bullet)
-             self.addChild(bullet)
-             */
+            if(litterSelected){
+                litter.position = location
+            }
         }
-        
     }
+    
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if(litterSelected){
+            for touch in touches{
+                let location = touch.locationInNode(self)
+                //print("Touch ended", location.x, location.y)
+            }
+        }
+        litterSelected = false
+    }
+    
+    //MARK: Contact events
     
     func didBeginContact(contact: SKPhysicsContact) {
         let touchedPart:String = contact.bodyA.valueForKey("representedObject")?.valueForKey("name") as! String
-        print("contact", touchedPart)
+        //print("contact", touchedPart)
         
-        
-        touchedParts.insert(touchedPart)
-        setTouchedLabel()
-        
-        
-        switch touchedPart {
-        case "jukuParemKasi":
-            deleteOnTouch.append(createBodyPart("jukuVasakJalaLaba"))
-        case "jukuParemKasiKeskmineSorm":
-            deleteOnTouch.append(createBodyPart("jukuParemJalg"))
-        default:
-            break
+
+        //if part is not incontact list then add it, else increment it's incontact count
+        var partNotIncontact = true
+        for part in incontact{
+            if part.0 == touchedPart{
+                var index = incontact.filter{$0 != part}
+                index.append((part.0, part.1+1))
+                incontact = index
+                partNotIncontact = false
+            }
         }
         
-
+        if partNotIncontact{
+            incontact.append((touchedPart, 0))
+            touchedParts.insert(touchedPart)
+            setTouchedLabel()
+            
+            if let bodyPart = contact.bodyA.node as? Bodypart{
+                for part in bodyPart.getTargets(){
+                    bodyPart.addChildz(createChild(touchedPart, name: part))
+                    //print("created", touchedPart, part)
+                }
+            }
+        }
+        //print(incontact)
     }
+
+        // kui liikuda näppude vahel ja seal näpult ära hüpata siis kaotab childi ära
     
     func didEndContact(contact: SKPhysicsContact) {
-        self.removeChildrenInArray(deleteOnTouch)
-        touchedParts = []
-        setTouchedLabel()
+        let touchedPart:String = contact.bodyA.valueForKey("representedObject")?.valueForKey("name") as! String
+        //print("NO contact", touchedPart)
+        
+        /*
+         Checks incontact list
+         if there has been more begincontacts than endcontacts with sprite then keeps children
+         else it removes them
+        */
+        var inList = true
+        for part in incontact{
+            if part.0 == touchedPart{
+                inList = false
+                if part.1 == 0{
+                    let index = incontact.filter{$0 != part}
+                    incontact = index
+                    
+                    touchedParts.remove(contact.bodyA.valueForKey("representedObject")?.valueForKey("name") as! String)
+                    
+                    if let bodyPart = contact.bodyA.node as? Bodypart{
+                        self.removeChildrenInArray(bodyPart.getChildz())
+                    }
+                    setTouchedLabel()
+                    
+                }else{
+                    var index = incontact.filter{$0 != part}
+                    index.append((part.0, part.1-1))
+                    incontact = index
+                }
+            }
+        }
+        if inList{
+            print("okou")
+        }
+        //print(incontact)
     }
     
-
     
+    //MARK: Not used functions
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func update(currentTime: CFTimeInterval) {
+        /* Called before each frame is rendered */
+    }
+
+ 
 }
