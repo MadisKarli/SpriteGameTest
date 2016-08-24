@@ -81,9 +81,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         //2048 x 1536
         if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation){
             jukuHeight = self.frame.size.height/2
-            jukuWidth = self.frame.size.width/2 }
+            jukuWidth = self.frame.size.width/2}
         else{
-            jukuHeight = self.frame.size.height/2
+            jukuHeight = self.frame.size.height/4
             jukuWidth = self.frame.size.width/4
         }
         print(self.frame.size.height, self.frame.size.width)
@@ -100,7 +100,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         juku.physicsBody?.categoryBitMask = bodyCategory
         juku.physicsBody?.contactTestBitMask = bulletCategory
         juku.physicsBody?.collisionBitMask = 0
-        //self.addChild(juku)
+        
+        self.addChild(juku)
         
 
         //following reads resources and creates body parts
