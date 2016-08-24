@@ -144,11 +144,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         //litter.physicsBody?.usesPreciseCollisionDetection = true
         incontact.append(("litter", 0))
         self.addChild(litter)
-        
+
     }
     
 
     //MARK: Functions
+
     
     func setTouchedLabel(){
         var new:String = "Touched body parts: "
