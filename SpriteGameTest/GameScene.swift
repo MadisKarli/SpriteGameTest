@@ -54,15 +54,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     var jukuHeight = CGFloat()
     var jukuWidth = CGFloat()
+    var zoomLevel = CGFloat()
     
     override func didMoveToView(view: SKView) {
         
         if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation){
-        touchedPartLabel.text = "Touched bodypart: "
-        touchedPartLabel.fontSize = 12
-        touchedPartLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height - 20)
-        touchedPartLabel.fontColor = SKColor.blackColor()
-        print("did", self.frame.size.height, self.frame.size.width)
+            touchedPartLabel.text = "Touched bodypart: "
+            touchedPartLabel.fontSize = 12
+            touchedPartLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height - 20)
+            touchedPartLabel.fontColor = SKColor.blackColor()
+            print("did", self.frame.size.height, self.frame.size.width)
             self.addChild(touchedPartLabel)
         }else{
             touchedPartLabel.text = "Touched bodypart: "
@@ -81,10 +82,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         //2048 x 1536
         if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation){
             jukuHeight = self.frame.size.height/2
-            jukuWidth = self.frame.size.width/2}
+            jukuWidth = self.frame.size.width/2
+            zoomLevel = CGFloat(2)}
         else{
-            jukuHeight = self.frame.size.height/4
+            jukuHeight = self.frame.size.height/2
             jukuWidth = self.frame.size.width/4
+            zoomLevel = CGFloat(1.5)
         }
         print(self.frame.size.height, self.frame.size.width)
         self.physicsWorld.gravity = CGVector(dx: 0,dy: 0)
@@ -92,6 +95,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         juku = SKSpriteNode(imageNamed: "juku")
         juku.name = "Juku"
+        var jukuSize = CGSizeMake(jukuWidth*zoomLevel,jukuHeight*zoomLevel)
+        
+        if UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation){
+            
+            juku.size = CGSizeMake(jukuWidth, jukuHeight)}
         
         juku.position = CGPointMake(jukuWidth, jukuHeight)
         juku.physicsBody = SKPhysicsBody(texture: juku.texture!, size: (juku.texture!.size()))
@@ -101,7 +109,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         juku.physicsBody?.contactTestBitMask = bulletCategory
         juku.physicsBody?.collisionBitMask = 0
         
-        self.addChild(juku)
+        //self.addChild(juku)
         
 
         //following reads resources and creates body parts
@@ -121,9 +129,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 if((name[0].rangeOfString(">")) != nil){
                     let targetsCombined:[String] = name[0].componentsSeparatedByString(">")
                     let targets: [String] = targetsCombined[1].componentsSeparatedByString("|")
-                    self.addChild(Bodypart(filename: name[0], targets: targets, width: jukuWidth, height: jukuHeight)!)
+                    self.addChild(Bodypart(filename: name[0], targets: targets, width: jukuWidth, height: jukuHeight, jukuSize: CGSizeMake(jukuWidth*zoomLevel,jukuHeight*zoomLevel))!)
                 } else{
-                    self.addChild(Bodypart(filename: name[0], width: jukuWidth, height: jukuHeight)!)
+                    self.addChild(Bodypart(filename: name[0], width: jukuWidth, height: jukuHeight, jukuSize: CGSizeMake(jukuWidth*zoomLevel,jukuHeight*zoomLevel))!)
                 }
 
             }
@@ -165,7 +173,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         bodyPart = SKSpriteNode(imageNamed: name)
         bodyPart.name = name
         bodyPart.position = CGPointMake(jukuWidth, jukuHeight)
-        bodyPart.physicsBody = SKPhysicsBody(texture: bodyPart.texture!, size: (bodyPart.texture!.size()))
+        bodyPart.physicsBody = SKPhysicsBody(texture: bodyPart.texture!, size: bodyPart.texture!.size())
         
         bodyPart.physicsBody?.dynamic = true
         bodyPart.physicsBody?.categoryBitMask = bodyCategory
@@ -181,6 +189,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         bodyPart = SKSpriteNode(imageNamed: name)
         bodyPart.name = parent + name
         bodyPart.position = CGPointMake(jukuWidth, jukuHeight)
+        bodyPart.size = CGSizeMake(jukuWidth*zoomLevel, jukuHeight*zoomLevel)
         print(jukuWidth, jukuHeight)
         self.addChild(bodyPart)
         return bodyPart

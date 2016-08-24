@@ -14,7 +14,7 @@ class Bodypart: SKSpriteNode{
     var targets = [String]()
     var childern = [SKSpriteNode]()
     
-    init?(filename: String, width:CGFloat, height:CGFloat){
+    init?(filename: String, width:CGFloat, height:CGFloat, jukuSize:CGSize){
         let texture = SKTexture(imageNamed: filename)
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
         
@@ -25,7 +25,7 @@ class Bodypart: SKSpriteNode{
         }else{
             self.name = filename
         }
-        
+        self.size = jukuSize
         self.physicsBody = SKPhysicsBody(texture: texture, size: (texture.size()))
         self.position = CGPoint(x: width, y: height)
         self.physicsBody = SKPhysicsBody(texture: texture, size: (texture.size()))
@@ -36,7 +36,7 @@ class Bodypart: SKSpriteNode{
         
     }
     
-    init?(filename: String, targets: [String], width:CGFloat, height:CGFloat){
+    init?(filename: String, targets: [String], width:CGFloat, height:CGFloat, jukuSize: CGSize){
         let texture = SKTexture(imageNamed: filename)
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
         
@@ -48,9 +48,10 @@ class Bodypart: SKSpriteNode{
             self.name = filename
         }
         
+        self.size = jukuSize
         self.targets = targets
         self.position = CGPoint(x: width, y: height)
-        self.physicsBody = SKPhysicsBody(texture: texture, size: (texture.size()))
+        self.physicsBody = SKPhysicsBody(texture: texture, size: jukuSize)
         self.physicsBody?.dynamic = true
         self.physicsBody?.categoryBitMask = bodyCategory
         self.physicsBody?.contactTestBitMask = bulletCategory
