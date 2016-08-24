@@ -79,8 +79,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         self.backgroundColor = SKColor.whiteColor()
         //2048 x 1536
-        jukuHeight = self.frame.size.height
-        jukuWidth = self.frame.size.width
+        if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation){
+            jukuHeight = self.frame.size.height/2
+            jukuWidth = self.frame.size.width/2 }
+        else{
+            jukuHeight = self.frame.size.height/2
+            jukuWidth = self.frame.size.width/4
+        }
         print(self.frame.size.height, self.frame.size.width)
         self.physicsWorld.gravity = CGVector(dx: 0,dy: 0)
         self.physicsWorld.contactDelegate = self
@@ -88,13 +93,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         juku = SKSpriteNode(imageNamed: "juku")
         juku.name = "Juku"
         
-        if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation){
-            juku.position = CGPointMake(jukuWidth/2, jukuHeight/2)
-            juku.physicsBody = SKPhysicsBody(texture: juku.texture!, size: (juku.texture!.size()))}
-        else{
-            juku.position = CGPointMake(jukuWidth*0.25, jukuHeight/2)
-            juku.physicsBody = SKPhysicsBody(texture: juku.texture!, size: (juku.texture!.size()))
-        }
+        juku.position = CGPointMake(jukuWidth, jukuHeight)
+        juku.physicsBody = SKPhysicsBody(texture: juku.texture!, size: (juku.texture!.size()))
+        
         
         juku.physicsBody?.categoryBitMask = bodyCategory
         juku.physicsBody?.contactTestBitMask = bulletCategory
