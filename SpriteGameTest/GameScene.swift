@@ -14,6 +14,16 @@
  
  optimiseerimine:
  kui laps juba on elus ja järgmisel on ka laps, siis võiks ainult üks sprite olla näiteks sama mis incontact array on
+ 
+ todo:
+ pildid xcassetsisse
+ 
+ copyright:
+ https://github.com/John-Lluch/SWRevealViewController/blob/master/LICENSE.txt
+ multiview:
+ https://www.youtube.com/watch?v=8EFfPT3UeWs
+ 
+ 
  */
 
 import SpriteKit
@@ -41,27 +51,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     var incontact = [(String,Int)]()
     
+    var jukuHeight = CGFloat()
+    var jukuWidth = CGFloat()
     
     override func didMoveToView(view: SKView) {
         
-        //disable multitouch
+        
         touchedPartLabel.text = "Touched bodypart: "
         touchedPartLabel.fontSize = 12
         touchedPartLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height - 20)
-        
+        touchedPartLabel.fontColor = SKColor.blackColor()
+        print("did", self.frame.size.height, self.frame.size.width)
         self.addChild(touchedPartLabel)
     }
     
     override init(size:CGSize){
         super.init(size:size)
         
+        self.backgroundColor = SKColor.whiteColor()
+        //2048 x 1536
+        jukuHeight = self.frame.size.height / 2
+        jukuWidth = self.frame.size.width / 2
+        print(self.frame.size.height, self.frame.size.width)
         self.physicsWorld.gravity = CGVector(dx: 0,dy: 0)
         self.physicsWorld.contactDelegate = self
         
         juku = SKSpriteNode(imageNamed: "juku")
         juku.name = "Juku"
         
-        juku.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2)
+        juku.position = CGPointMake(jukuWidth, jukuHeight)
         juku.physicsBody = SKPhysicsBody(texture: juku.texture!, size: (juku.texture!.size()))
         
         juku.physicsBody?.categoryBitMask = bodyCategory
@@ -80,18 +98,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let path = NSBundle.mainBundle().resourcePath!
         let items = try! fm.contentsOfDirectoryAtPath(path)
         for item in items {
-            if item.hasPrefix("obj_") && item.hasSuffix("@1x.png"){
+            //&& item.hasSuffix("@1x.png")
+            if item.hasPrefix("obj_") {
                 let name:[String] = item.componentsSeparatedByString("@")
-                print(name[0])
+                
                 if((name[0].rangeOfString(">")) != nil){
                     let targetsCombined:[String] = name[0].componentsSeparatedByString(">")
                     let targets: [String] = targetsCombined[1].componentsSeparatedByString("|")
-                    for i in targets{
-                        print(i)
-                    }
-                    self.addChild(Bodypart(filename: name[0], targets: targets)!)
+                    self.addChild(Bodypart(filename: name[0], targets: targets, width: jukuWidth, height: jukuHeight)!)
                 } else{
-                    self.addChild(Bodypart(filename: name[0])!)
+                    self.addChild(Bodypart(filename: name[0], width: jukuWidth, height: jukuHeight)!)
                 }
 
             }
@@ -132,8 +148,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         bodyPart = SKSpriteNode(imageNamed: name)
         bodyPart.name = name
-        bodyPart.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2)
-        
+        bodyPart.position = CGPointMake(jukuWidth, jukuHeight)
         bodyPart.physicsBody = SKPhysicsBody(texture: bodyPart.texture!, size: (bodyPart.texture!.size()))
         
         bodyPart.physicsBody?.dynamic = true
@@ -149,8 +164,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         bodyPart = SKSpriteNode(imageNamed: name)
         bodyPart.name = parent + name
-        bodyPart.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2)
-        
+        bodyPart.position = CGPointMake(jukuWidth, jukuHeight)
+        print(jukuWidth, jukuHeight)
         self.addChild(bodyPart)
         return bodyPart
     }
@@ -190,7 +205,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if(litterSelected){
             for touch in touches{
-                let location = touch.locationInNode(self)
+                var location = touch.locationInNode(self)
                 //print("Touch ended", location.x, location.y)
             }
         }
