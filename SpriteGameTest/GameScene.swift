@@ -59,7 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override func didMoveToView(view: SKView) {
         
-        
+        if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation){
         touchedPartLabel.text = "Touched bodypart: "
         touchedPartLabel.fontSize = 12
         touchedPartLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height - 20)
