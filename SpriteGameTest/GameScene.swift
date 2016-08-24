@@ -8,8 +8,8 @@
 /*
  kotid
  bugid:
- pea keskel ei näita collisionit
- collision üldse üsna broken
+ 
+ 
  
  kiiresti liigutades ei tööta - button to kill children and reset?
  
@@ -44,6 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var bullet:SKSpriteNode = SKSpriteNode()
     var litter:SKSpriteNode = SKSpriteNode()
     var litterSelected:Bool = false
+    var useLitter:Bool = true
 
     var targetPosition:CGPoint = CGPoint()
     var touchedPartLabel = SKLabelNode()
@@ -58,6 +59,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     
     override func didMoveToView(view: SKView) {
+        let litterMoveSelector:UISwitch = UISwitch(frame: CGRectMake(self.frame.width * 0.75, self.frame.height - 50, 0, 0))
+        litterMoveSelector.on = true
+        litterMoveSelector.setOn(true, animated: false)
+        litterMoveSelector.addTarget(self, action: #selector(GameScene.switchValueDidChange(_:)), forControlEvents: .ValueChanged)
+        self.view?.addSubview(litterMoveSelector)
+        //todo: pildid on ja off jaoks või mingi õpetlik label + orientationi muutmine ka
+        
         
         if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation){
         touchedPartLabel.text = "Touched bodypart: "
@@ -81,8 +89,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         self.backgroundColor = SKColor.whiteColor()
         //2048 x 1536
-        jukuHeight = self.frame.size.height / 2
-        jukuWidth = self.frame.size.width / 2
+        if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation){
+            jukuHeight = self.frame.size.height/2
+            jukuWidth = self.frame.size.width/2}
+        else{
+            jukuHeight = self.frame.size.height/2
+            jukuWidth = self.frame.size.width/4
+        }
+        print(self.frame.size.height, self.frame.size.width)
         self.physicsWorld.gravity = CGVector(dx: 0,dy: 0)
         self.physicsWorld.contactDelegate = self
         
@@ -91,8 +105,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         juku.position = CGPointMake(jukuWidth, jukuHeight)
         juku.physicsBody = SKPhysicsBody(texture: juku.texture!, size: (juku.texture!.size()))
-        
-        
         juku.physicsBody?.categoryBitMask = bodyCategory
         juku.physicsBody?.contactTestBitMask = bulletCategory
         juku.physicsBody?.collisionBitMask = 0
@@ -144,6 +156,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 
     }
     
+    func switchValueDidChange(sender:UISwitch!) {
+        useLitter = sender.on
+    }
 
     //MARK: Functions
 
@@ -195,13 +210,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         for touch in touches {
  
             let location = touch.locationInNode(self)
-            if(litter.containsPoint(location)){
-                litterSelected = true
+            if useLitter{
+                if(litter.containsPoint(location)){
+                    litterSelected = true
+                }
+            }else{
+                litter.position = location
             }
+            
             //print("touch", location.x, location.y)
-
         }
-        
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -260,7 +278,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         //print(incontact)
     }
 
-        // kui liikuda näppude vahel ja seal näpult ära hüpata siis kaotab childi ära
     
     func didEndContact(contact: SKPhysicsContact) {
         let touchedPart:String = contact.bodyA.valueForKey("representedObject")?.valueForKey("name") as! String

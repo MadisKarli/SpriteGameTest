@@ -46,12 +46,10 @@ class GameViewController: UIViewController {
         skView.presentScene(scene)
         
         
-        //move this to gameScene
-        let litterMoveSelector:UISwitch = UISwitch(frame: CGRectMake(scene.frame.width * 0.75, scene.frame.height - 50, 0, 0))
-        litterMoveSelector.on = true
-        self.view?.addSubview(litterMoveSelector)
-        
     }
+    
+
+
 
     override func shouldAutorotate() -> Bool {
         return true
