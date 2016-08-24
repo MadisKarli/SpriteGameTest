@@ -34,12 +34,12 @@
 		B37FF2131D5C861900D929DA /* juku@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B37FF2111D5C861900D929DA /* juku@1x.png */; };
 		B37FF2151D5C878300D929DA /* jukuParemKasi@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B37FF2141D5C878300D929DA /* jukuParemKasi@1x.png */; };
 		B37FF2161D5C878300D929DA /* jukuParemKasi@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B37FF2141D5C878300D929DA /* jukuParemKasi@1x.png */; };
-		B383FA711D5CACF30082138C /* jukuPea@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B383FA701D5CACF30082138C /* jukuPea@1x.png */; };
-		B383FA721D5CACF30082138C /* jukuPea@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B383FA701D5CACF30082138C /* jukuPea@1x.png */; };
 		B383FA751D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B383FA731D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png */; };
 		B383FA761D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B383FA731D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png */; };
 		B383FA771D5CB42C0082138C /* jukuParemKasiSormed@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B383FA741D5CB42C0082138C /* jukuParemKasiSormed@1x.png */; };
 		B383FA781D5CB42C0082138C /* jukuParemKasiSormed@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B383FA741D5CB42C0082138C /* jukuParemKasiSormed@1x.png */; };
+		B3AD286B1D6DD9D900F4E396 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3AD286A1D6DD9D900F4E396 /* SWRevealViewController.m */; };
+		B3AD286C1D6DD9D900F4E396 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3AD286A1D6DD9D900F4E396 /* SWRevealViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,9 +75,12 @@
 		B377C8CA1D61C43D00076BCE /* litter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = litter.png; sourceTree = "<group>"; };
 		B37FF2111D5C861900D929DA /* juku@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "juku@1x.png"; sourceTree = "<group>"; };
 		B37FF2141D5C878300D929DA /* jukuParemKasi@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jukuParemKasi@1x.png"; sourceTree = "<group>"; };
-		B383FA701D5CACF30082138C /* jukuPea@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jukuPea@1x.png"; sourceTree = "<group>"; };
 		B383FA731D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jukuParemKasiKeskmineSorm@1x.png"; sourceTree = "<group>"; };
 		B383FA741D5CB42C0082138C /* jukuParemKasiSormed@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jukuParemKasiSormed@1x.png"; sourceTree = "<group>"; };
+		B3AD28671D6DD9D800F4E396 /* SpriteGameTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpriteGameTest-Bridging-Header.h"; sourceTree = "<group>"; };
+		B3AD28681D6DD9D800F4E396 /* SpriteGameTestTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpriteGameTestTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		B3AD28691D6DD9D900F4E396 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		B3AD286A1D6DD9D900F4E396 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,9 +104,12 @@
 		B316CE021D5BCB5A00FAAE95 = {
 			isa = PBXGroup;
 			children = (
+				B3AD286D1D6DD9E700F4E396 /* Supporting Files */,
 				B316CE0D1D5BCB5A00FAAE95 /* SpriteGameTest */,
 				B316CE261D5BCB5A00FAAE95 /* SpriteGameTestTests */,
 				B316CE0C1D5BCB5A00FAAE95 /* Products */,
+				B3AD28671D6DD9D800F4E396 /* SpriteGameTest-Bridging-Header.h */,
+				B3AD28681D6DD9D800F4E396 /* SpriteGameTestTests-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -157,7 +163,6 @@
 				B314892F1D647A1C00E7C83B /* obj_jukuParemKasiKeskmineSorm>jukuParemJalg@1x.png */,
 				B359EF591D647EA300A03982 /* obj_jukuParemKasi>jukuVasakJalaLaba@1x.png */,
 				B359EF5B1D647EA300A03982 /* obj_jukuPea>jukuVasakJalaLaba|jukuParemJalg@1x.png */,
-				B383FA701D5CACF30082138C /* jukuPea@1x.png */,
 				B37FF2111D5C861900D929DA /* juku@1x.png */,
 				B37FF2141D5C878300D929DA /* jukuParemKasi@1x.png */,
 				B383FA731D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png */,
@@ -167,6 +172,15 @@
 				B377C8CA1D61C43D00076BCE /* litter.png */,
 			);
 			name = juku.atlas;
+			sourceTree = "<group>";
+		};
+		B3AD286D1D6DD9E700F4E396 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B3AD28691D6DD9D900F4E396 /* SWRevealViewController.h */,
+				B3AD286A1D6DD9D900F4E396 /* SWRevealViewController.m */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,7 +274,6 @@
 				B377C8CB1D61C43D00076BCE /* litter.png in Resources */,
 				B359EF5E1D647EA300A03982 /* obj_jukuParemKasi>jukuVasakJalaLaba@1x.png in Resources */,
 				B316CE1D1D5BCB5A00FAAE95 /* LaunchScreen.storyboard in Resources */,
-				B383FA711D5CACF30082138C /* jukuPea@1x.png in Resources */,
 				B316CE1A1D5BCB5A00FAAE95 /* Assets.xcassets in Resources */,
 				B31489301D647A1C00E7C83B /* obj_jukuParemKasiKeskmineSorm>jukuParemJalg@1x.png in Resources */,
 				B37FF2151D5C878300D929DA /* jukuParemKasi@1x.png in Resources */,
@@ -279,7 +292,6 @@
 				B359EF5F1D647EA300A03982 /* obj_jukuParemKasi>jukuVasakJalaLaba@1x.png in Resources */,
 				B37FF2131D5C861900D929DA /* juku@1x.png in Resources */,
 				B308C39C1D5CD36B001EC257 /* jukuParemJalg@1x.png in Resources */,
-				B383FA721D5CACF30082138C /* jukuPea@1x.png in Resources */,
 				B31489311D647A1C00E7C83B /* obj_jukuParemKasiKeskmineSorm>jukuParemJalg@1x.png in Resources */,
 				B359EF631D647EA300A03982 /* obj_jukuPea>jukuVasakJalaLaba|jukuParemJalg@1x.png in Resources */,
 				B308C3991D5CD0DD001EC257 /* jukuVasakJalaLaba@1x.png in Resources */,
@@ -297,6 +309,7 @@
 			files = (
 				B316CE131D5BCB5A00FAAE95 /* GameScene.swift in Sources */,
 				B316CE151D5BCB5A00FAAE95 /* GameViewController.swift in Sources */,
+				B3AD286B1D6DD9D900F4E396 /* SWRevealViewController.m in Sources */,
 				B308C3A11D5CDC3D001EC257 /* Bodypart.swift in Sources */,
 				B316CE0F1D5BCB5A00FAAE95 /* AppDelegate.swift in Sources */,
 			);
@@ -308,6 +321,7 @@
 			files = (
 				B308C3A21D5CDC3D001EC257 /* Bodypart.swift in Sources */,
 				B316CE281D5BCB5A00FAAE95 /* SpriteGameTestTests.swift in Sources */,
+				B3AD286C1D6DD9D900F4E396 /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +444,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SpriteGameTest/Info.plist;
@@ -437,6 +452,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.koppel.SpriteGameTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SpriteGameTest-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -444,6 +461,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SpriteGameTest/Info.plist;
@@ -451,6 +469,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.koppel.SpriteGameTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SpriteGameTest-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -458,11 +477,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = SpriteGameTestTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.koppel.SpriteGameTestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SpriteGameTestTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpriteGameTest.app/SpriteGameTest";
 			};
 			name = Debug;
@@ -471,10 +493,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = SpriteGameTestTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.koppel.SpriteGameTestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SpriteGameTestTests-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpriteGameTest.app/SpriteGameTest";
 			};
 			name = Release;
