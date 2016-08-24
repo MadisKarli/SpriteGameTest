@@ -55,6 +55,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var jukuHeight = CGFloat()
     var jukuWidth = CGFloat()
     
+    
+    
     override func didMoveToView(view: SKView) {
         
         
@@ -62,8 +64,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         touchedPartLabel.fontSize = 12
         touchedPartLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height - 20)
         touchedPartLabel.fontColor = SKColor.blackColor()
-        print("did", self.frame.size.height, self.frame.size.width)
         self.addChild(touchedPartLabel)
+        
+        
+        //Button that is used to switch between drag and drop | touch
+        var litterMoveSwitch:UISwitch  = UISwitch()
     }
     
     override init(size:CGSize){
@@ -73,7 +78,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         //2048 x 1536
         jukuHeight = self.frame.size.height / 2
         jukuWidth = self.frame.size.width / 2
-        print(self.frame.size.height, self.frame.size.width)
         self.physicsWorld.gravity = CGVector(dx: 0,dy: 0)
         self.physicsWorld.contactDelegate = self
         
@@ -98,6 +102,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let fm = NSFileManager.defaultManager()
         let path = NSBundle.mainBundle().resourcePath!
         let items = try! fm.contentsOfDirectoryAtPath(path)
+
+        
         for item in items {
             //&& item.hasSuffix("@1x.png")
             if item.hasPrefix("obj_") {
@@ -205,9 +211,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if(litterSelected){
+            //not actually needed
             for touch in touches{
-                var location = touch.locationInNode(self)
-                //print("Touch ended", location.x, location.y)
+                let _ = touch.locationInNode(self)
             }
         }
         litterSelected = false

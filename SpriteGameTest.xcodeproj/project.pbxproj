@@ -32,12 +32,6 @@
 		B377C8CB1D61C43D00076BCE /* litter.png in Resources */ = {isa = PBXBuildFile; fileRef = B377C8CA1D61C43D00076BCE /* litter.png */; };
 		B37FF2121D5C861900D929DA /* juku@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B37FF2111D5C861900D929DA /* juku@1x.png */; };
 		B37FF2131D5C861900D929DA /* juku@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B37FF2111D5C861900D929DA /* juku@1x.png */; };
-		B37FF2151D5C878300D929DA /* jukuParemKasi@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B37FF2141D5C878300D929DA /* jukuParemKasi@1x.png */; };
-		B37FF2161D5C878300D929DA /* jukuParemKasi@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B37FF2141D5C878300D929DA /* jukuParemKasi@1x.png */; };
-		B383FA751D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B383FA731D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png */; };
-		B383FA761D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B383FA731D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png */; };
-		B383FA771D5CB42C0082138C /* jukuParemKasiSormed@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B383FA741D5CB42C0082138C /* jukuParemKasiSormed@1x.png */; };
-		B383FA781D5CB42C0082138C /* jukuParemKasiSormed@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B383FA741D5CB42C0082138C /* jukuParemKasiSormed@1x.png */; };
 		B3AD286B1D6DD9D900F4E396 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3AD286A1D6DD9D900F4E396 /* SWRevealViewController.m */; };
 		B3AD286C1D6DD9D900F4E396 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3AD286A1D6DD9D900F4E396 /* SWRevealViewController.m */; };
 /* End PBXBuildFile section */
@@ -74,9 +68,6 @@
 		B359EF5B1D647EA300A03982 /* obj_jukuPea>jukuVasakJalaLaba|jukuParemJalg@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "obj_jukuPea>jukuVasakJalaLaba|jukuParemJalg@1x.png"; path = "pictures/obj_jukuPea>jukuVasakJalaLaba|jukuParemJalg@1x.png"; sourceTree = "<group>"; };
 		B377C8CA1D61C43D00076BCE /* litter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = litter.png; sourceTree = "<group>"; };
 		B37FF2111D5C861900D929DA /* juku@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "juku@1x.png"; sourceTree = "<group>"; };
-		B37FF2141D5C878300D929DA /* jukuParemKasi@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jukuParemKasi@1x.png"; sourceTree = "<group>"; };
-		B383FA731D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jukuParemKasiKeskmineSorm@1x.png"; sourceTree = "<group>"; };
-		B383FA741D5CB42C0082138C /* jukuParemKasiSormed@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jukuParemKasiSormed@1x.png"; sourceTree = "<group>"; };
 		B3AD28671D6DD9D800F4E396 /* SpriteGameTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpriteGameTest-Bridging-Header.h"; sourceTree = "<group>"; };
 		B3AD28681D6DD9D800F4E396 /* SpriteGameTestTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpriteGameTestTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		B3AD28691D6DD9D900F4E396 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -126,16 +117,15 @@
 			isa = PBXGroup;
 			children = (
 				B37FF2011D5C807A00D929DA /* juku.atlas */,
-				B316CE331D5BCB7600FAAE95 /* sprites.atlas */,
-				B316CE0E1D5BCB5A00FAAE95 /* AppDelegate.swift */,
-				B316CE101D5BCB5A00FAAE95 /* GameScene.sks */,
+				B308C3A01D5CDC3D001EC257 /* Bodypart.swift */,
 				B316CE121D5BCB5A00FAAE95 /* GameScene.swift */,
 				B316CE141D5BCB5A00FAAE95 /* GameViewController.swift */,
+				B316CE0E1D5BCB5A00FAAE95 /* AppDelegate.swift */,
 				B316CE161D5BCB5A00FAAE95 /* Main.storyboard */,
 				B316CE191D5BCB5A00FAAE95 /* Assets.xcassets */,
 				B316CE1B1D5BCB5A00FAAE95 /* LaunchScreen.storyboard */,
 				B316CE1E1D5BCB5A00FAAE95 /* Info.plist */,
-				B308C3A01D5CDC3D001EC257 /* Bodypart.swift */,
+				B316CE101D5BCB5A00FAAE95 /* GameScene.sks */,
 			);
 			path = SpriteGameTest;
 			sourceTree = "<group>";
@@ -149,13 +139,6 @@
 			path = SpriteGameTestTests;
 			sourceTree = "<group>";
 		};
-		B316CE331D5BCB7600FAAE95 /* sprites.atlas */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = sprites.atlas;
-			sourceTree = "<group>";
-		};
 		B37FF2011D5C807A00D929DA /* juku.atlas */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,9 +147,6 @@
 				B359EF591D647EA300A03982 /* obj_jukuParemKasi>jukuVasakJalaLaba@1x.png */,
 				B359EF5B1D647EA300A03982 /* obj_jukuPea>jukuVasakJalaLaba|jukuParemJalg@1x.png */,
 				B37FF2111D5C861900D929DA /* juku@1x.png */,
-				B37FF2141D5C878300D929DA /* jukuParemKasi@1x.png */,
-				B383FA731D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png */,
-				B383FA741D5CB42C0082138C /* jukuParemKasiSormed@1x.png */,
 				B308C3971D5CD0DD001EC257 /* jukuVasakJalaLaba@1x.png */,
 				B308C39A1D5CD36B001EC257 /* jukuParemJalg@1x.png */,
 				B377C8CA1D61C43D00076BCE /* litter.png */,
@@ -265,7 +245,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B383FA771D5CB42C0082138C /* jukuParemKasiSormed@1x.png in Resources */,
 				B37FF2121D5C861900D929DA /* juku@1x.png in Resources */,
 				B31489331D647A9800E7C83B /* obj_juku@1x.png in Resources */,
 				B359EF621D647EA300A03982 /* obj_jukuPea>jukuVasakJalaLaba|jukuParemJalg@1x.png in Resources */,
@@ -276,10 +255,8 @@
 				B316CE1D1D5BCB5A00FAAE95 /* LaunchScreen.storyboard in Resources */,
 				B316CE1A1D5BCB5A00FAAE95 /* Assets.xcassets in Resources */,
 				B31489301D647A1C00E7C83B /* obj_jukuParemKasiKeskmineSorm>jukuParemJalg@1x.png in Resources */,
-				B37FF2151D5C878300D929DA /* jukuParemKasi@1x.png in Resources */,
 				B316CE181D5BCB5A00FAAE95 /* Main.storyboard in Resources */,
 				B308C39B1D5CD36B001EC257 /* jukuParemJalg@1x.png in Resources */,
-				B383FA751D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,7 +264,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B383FA781D5CB42C0082138C /* jukuParemKasiSormed@1x.png in Resources */,
 				B31489341D647A9800E7C83B /* obj_juku@1x.png in Resources */,
 				B359EF5F1D647EA300A03982 /* obj_jukuParemKasi>jukuVasakJalaLaba@1x.png in Resources */,
 				B37FF2131D5C861900D929DA /* juku@1x.png in Resources */,
@@ -295,8 +271,6 @@
 				B31489311D647A1C00E7C83B /* obj_jukuParemKasiKeskmineSorm>jukuParemJalg@1x.png in Resources */,
 				B359EF631D647EA300A03982 /* obj_jukuPea>jukuVasakJalaLaba|jukuParemJalg@1x.png in Resources */,
 				B308C3991D5CD0DD001EC257 /* jukuVasakJalaLaba@1x.png in Resources */,
-				B383FA761D5CB42C0082138C /* jukuParemKasiKeskmineSorm@1x.png in Resources */,
-				B37FF2161D5C878300D929DA /* jukuParemKasi@1x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
