@@ -89,8 +89,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         juku = SKSpriteNode(imageNamed: "juku")
         juku.name = "Juku"
         
-        juku.position = CGPointMake(jukuWidth, jukuHeight)
-        juku.physicsBody = SKPhysicsBody(texture: juku.texture!, size: (juku.texture!.size()))
+        if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation){
+            juku.position = CGPointMake(jukuWidth/2, jukuHeight/2)
+            juku.physicsBody = SKPhysicsBody(texture: juku.texture!, size: (juku.texture!.size()))}
+        else{
+            juku.position = CGPointMake(jukuWidth*0.25, jukuHeight/2)
+            juku.physicsBody = SKPhysicsBody(texture: juku.texture!, size: (juku.texture!.size()))
+        }
         
         juku.physicsBody?.categoryBitMask = bodyCategory
         juku.physicsBody?.contactTestBitMask = bulletCategory
