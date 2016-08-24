@@ -57,13 +57,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override func didMoveToView(view: SKView) {
         
-        
+        if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation){
         touchedPartLabel.text = "Touched bodypart: "
         touchedPartLabel.fontSize = 12
         touchedPartLabel.position = CGPoint(x: self.frame.width / 2, y: self.frame.height - 20)
         touchedPartLabel.fontColor = SKColor.blackColor()
         print("did", self.frame.size.height, self.frame.size.width)
-        self.addChild(touchedPartLabel)
+            self.addChild(touchedPartLabel)
+        }else{
+            touchedPartLabel.text = "Touched bodypart: "
+            touchedPartLabel.fontSize = 12
+            touchedPartLabel.position = CGPoint(x: self.frame.width*0.75, y: self.frame.height-50)
+            touchedPartLabel.fontColor = SKColor.blackColor()
+            print("did", self.frame.size.height, self.frame.size.width)
+            self.addChild(touchedPartLabel)
+        }
     }
     
     override init(size:CGSize){
