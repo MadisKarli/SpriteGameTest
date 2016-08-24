@@ -6,6 +6,7 @@
 //  Copyright (c) 2016 Papple Inc. All rights reserved.
 //
 /*
+ kotid
  bugid:
  pea keskel ei näita collisionit
  collision üldse üsna broken
