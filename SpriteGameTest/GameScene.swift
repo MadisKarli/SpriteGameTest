@@ -6,9 +6,8 @@
 //  Copyright (c) 2016 Papple Inc. All rights reserved.
 //
 /*
- kotid
  bugid:
- 
+ touch sama kehaosa sees ei uuenda õieti
  
  
  kiiresti liigutades ei tööta - button to kill children and reset?
@@ -45,6 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var litter:SKSpriteNode = SKSpriteNode()
     var litterSelected:Bool = false
     var useLitter:Bool = true
+    var litterStartPosition:CGPoint = CGPoint(x: 25, y: 25)//TODO: paremaks
 
     var targetPosition:CGPoint = CGPoint()
     var touchedPartLabel = SKLabelNode()
@@ -52,19 +52,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var deleteOnTouch = [SKSpriteNode]()
     
     var incontact = [(String,Int)]()
+    var partsInContact:[Bodypart] = [Bodypart]()
     
     var jukuHeight = CGFloat()
     var jukuWidth = CGFloat()
     var zoomLevel = CGFloat()
     
-    
+    // MARK: move and init functions
     
     override func didMoveToView(view: SKView) {
         let litterMoveSelector:UISwitch = UISwitch(frame: CGRectMake(self.frame.width * 0.75, self.frame.height - 50, 0, 0))
         litterMoveSelector.on = true
         litterMoveSelector.setOn(true, animated: false)
         litterMoveSelector.addTarget(self, action: #selector(GameScene.switchValueDidChange(_:)), forControlEvents: .ValueChanged)
+        
         self.view?.addSubview(litterMoveSelector)
+        
+        
+        
         //todo: pildid on ja off jaoks või mingi õpetlik label + orientationi muutmine ka
         
         
@@ -87,6 +92,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override init(size:CGSize){
         super.init(size:size)
+        litterStartPosition = CGPoint(x:25, y:self.frame.height - 25)
         
         self.backgroundColor = SKColor.whiteColor()
         //2048 x 1536
@@ -99,25 +105,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             jukuWidth = self.frame.size.width/4
             zoomLevel = CGFloat(1.5)
         }
-        print(self.frame.size.height, self.frame.size.width)
+
         self.physicsWorld.gravity = CGVector(dx: 0,dy: 0)
         self.physicsWorld.contactDelegate = self
         
-        juku = SKSpriteNode(imageNamed: "juku")
-        juku.name = "Juku"
-        var jukuSize = CGSizeMake(jukuWidth*zoomLevel,jukuHeight*zoomLevel)
-        
-        if UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation){
-            
-            juku.size = CGSizeMake(jukuWidth, jukuHeight)}
-        
-        juku.position = CGPointMake(jukuWidth, jukuHeight)
-        juku.physicsBody = SKPhysicsBody(texture: juku.texture!, size: (juku.texture!.size()))
-        juku.physicsBody?.categoryBitMask = bodyCategory
-        juku.physicsBody?.contactTestBitMask = bulletCategory
-        juku.physicsBody?.collisionBitMask = 0
-        
-        //self.addChild(juku)
         
 
         //following reads resources and creates body parts
@@ -151,7 +142,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         //loome litri, mida saab ringi lohistada
         litter = SKSpriteNode(imageNamed: "litter")
         litter.name = "litter"
-        litter.position = CGPoint(x: 25, y: self.size.height - 25)
+        litter.position = litterStartPosition
         
         litter.physicsBody = SKPhysicsBody(circleOfRadius: 25)
         litter.physicsBody?.dynamic = true
@@ -164,11 +155,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 
     }
     
+    
+    //MARK: Functions
+
     func switchValueDidChange(sender:UISwitch!) {
         useLitter = sender.on
     }
-
-    //MARK: Functions
 
     
     func setTouchedLabel(){
@@ -204,30 +196,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         bodyPart.name = parent + name
         bodyPart.position = CGPointMake(jukuWidth, jukuHeight)
         bodyPart.size = CGSizeMake(jukuWidth*zoomLevel, jukuHeight*zoomLevel)
-        print(jukuWidth, jukuHeight)
+      	  print(jukuWidth, jukuHeight)
         self.addChild(bodyPart)
         return bodyPart
     }
 
     
     // MARK: Touch events
+    /*
+     ?labels - touchesBegan clears all labels IF using touch
+     
+     touch - touchesBegan moves litter to touch location
+     touch - touchesBegan removes all parts that are already in contact
+     
+     drag - touchesBegan selects litter if it is touched
+     drag - touchesMoved moves litter
+     drag - touchesEnd marks litter as not selected
+    */
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
-        touchedParts = []
-        setTouchedLabel()        
+        
         for touch in touches {
- 
             let location = touch.locationInNode(self)
             if useLitter{
                 if(litter.containsPoint(location)){
                     litterSelected = true
                 }
-            }else{
+            }else {
+                for part in partsInContact{
+                    self.removeChildrenInArray(part.getChildz())
+                }
+                touchedParts = []
+                setTouchedLabel()
+                partsInContact = []
+                incontact = [("litter", 0)]
+                
                 litter.position = location
             }
-            
-            //print("touch", location.x, location.y)
         }
     }
     
@@ -256,35 +262,57 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     //MARK: Contact events
     
+    /*
+     label - updated with didBeginContact and didEndContact
+     
+     tocuh - begin contact events are in didBeginContact
+     touch - end contact events are above in touchesBegan
+     
+     drag - begin contact events are in didBeginContact
+     drag - end contact events are in didEndContact
+    */
+    
     func didBeginContact(contact: SKPhysicsContact) {
         let touchedPart:String = contact.bodyA.valueForKey("representedObject")?.valueForKey("name") as! String
-        //print("contact", touchedPart)
+        print("contact", touchedPart)
         
-
+        if useLitter{
         //if part is not incontact list then add it, else increment it's incontact count
-        var partNotIncontact = true
-        for part in incontact{
-            if part.0 == touchedPart{
-                var index = incontact.filter{$0 != part}
-                index.append((part.0, part.1+1))
-                incontact = index
-                partNotIncontact = false
+            var partNotIncontact = true
+            for part in incontact{
+                if part.0 == touchedPart{
+                    var index = incontact.filter{$0 != part}
+                    index.append((part.0, part.1+1))
+                    incontact = index
+                    partNotIncontact = false
+                }
+            }
+            
+            if partNotIncontact{
+                incontact.append((touchedPart, 0))
+                touchedParts.insert(touchedPart)
+                setTouchedLabel()
+                
+                if let bodyPart = contact.bodyA.node as? Bodypart{
+                    partsInContact.append(bodyPart)
+                    for part in bodyPart.getTargets(){
+                        bodyPart.addChildz(createChild(touchedPart, name: part))
+                    }
+                }
             }
         }
-        
-        if partNotIncontact{
-            incontact.append((touchedPart, 0))
+        else{
             touchedParts.insert(touchedPart)
             setTouchedLabel()
             
             if let bodyPart = contact.bodyA.node as? Bodypart{
+                partsInContact.append(bodyPart)
                 for part in bodyPart.getTargets(){
                     bodyPart.addChildz(createChild(touchedPart, name: part))
-                    //print("created", touchedPart, part)
                 }
             }
+
         }
-        //print(incontact)
     }
 
     
@@ -297,6 +325,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
          if there has been more begincontacts than endcontacts with sprite then keeps children
          else it removes them
         */
+
+
         var inList = true
         for part in incontact{
             if part.0 == touchedPart{
@@ -319,10 +349,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 }
             }
         }
-        if inList{
-            print("okou")
+        
+        if !useLitter{
+            print("heehee")
+            
+        }else{
+            if inList{
+                print("inList true - THIS IS REALLY BAD!")
+            }
         }
-        //print(incontact)
     }
     
     
@@ -334,6 +369,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+
     }
 
  

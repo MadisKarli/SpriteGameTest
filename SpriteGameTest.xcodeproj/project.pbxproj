@@ -34,6 +34,8 @@
 		B37FF2131D5C861900D929DA /* juku@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = B37FF2111D5C861900D929DA /* juku@1x.png */; };
 		B3AD286B1D6DD9D900F4E396 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3AD286A1D6DD9D900F4E396 /* SWRevealViewController.m */; };
 		B3AD286C1D6DD9D900F4E396 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3AD286A1D6DD9D900F4E396 /* SWRevealViewController.m */; };
+		B3FD95871D6F299D0013783A /* Litter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FD95861D6F299D0013783A /* Litter.swift */; };
+		B3FD95881D6F299D0013783A /* Litter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FD95861D6F299D0013783A /* Litter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,7 @@
 		B3AD28681D6DD9D800F4E396 /* SpriteGameTestTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpriteGameTestTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		B3AD28691D6DD9D900F4E396 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		B3AD286A1D6DD9D900F4E396 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		B3FD95861D6F299D0013783A /* Litter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Litter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,7 @@
 				B308C3A01D5CDC3D001EC257 /* Bodypart.swift */,
 				B316CE121D5BCB5A00FAAE95 /* GameScene.swift */,
 				B316CE141D5BCB5A00FAAE95 /* GameViewController.swift */,
+				B3FD95861D6F299D0013783A /* Litter.swift */,
 				B316CE0E1D5BCB5A00FAAE95 /* AppDelegate.swift */,
 				B316CE161D5BCB5A00FAAE95 /* Main.storyboard */,
 				B316CE191D5BCB5A00FAAE95 /* Assets.xcassets */,
@@ -284,6 +288,7 @@
 				B316CE131D5BCB5A00FAAE95 /* GameScene.swift in Sources */,
 				B316CE151D5BCB5A00FAAE95 /* GameViewController.swift in Sources */,
 				B3AD286B1D6DD9D900F4E396 /* SWRevealViewController.m in Sources */,
+				B3FD95871D6F299D0013783A /* Litter.swift in Sources */,
 				B308C3A11D5CDC3D001EC257 /* Bodypart.swift in Sources */,
 				B316CE0F1D5BCB5A00FAAE95 /* AppDelegate.swift in Sources */,
 			);
@@ -296,6 +301,7 @@
 				B308C3A21D5CDC3D001EC257 /* Bodypart.swift in Sources */,
 				B316CE281D5BCB5A00FAAE95 /* SpriteGameTestTests.swift in Sources */,
 				B3AD286C1D6DD9D900F4E396 /* SWRevealViewController.m in Sources */,
+				B3FD95881D6F299D0013783A /* Litter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
