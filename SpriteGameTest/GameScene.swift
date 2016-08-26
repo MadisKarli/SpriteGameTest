@@ -96,6 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         self.backgroundColor = SKColor.whiteColor()
         //2048 x 1536
+        
         if UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation){
             jukuHeight = self.frame.size.height/2
             jukuWidth = self.frame.size.width/2

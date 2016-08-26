@@ -26,9 +26,10 @@ class Bodypart: SKSpriteNode{
             self.name = filename
         }
         self.size = jukuSize
-        self.physicsBody = SKPhysicsBody(texture: texture, size: (texture.size()))
+        
+        self.physicsBody = SKPhysicsBody(texture: texture, size: (jukuSize))
         self.position = CGPoint(x: width, y: height)
-        self.physicsBody = SKPhysicsBody(texture: texture, size: (texture.size()))
+        self.physicsBody = SKPhysicsBody(texture: texture, size: (jukuSize))
         self.physicsBody?.dynamic = true
         self.physicsBody?.categoryBitMask = bodyCategory
         self.physicsBody?.contactTestBitMask = bulletCategory
